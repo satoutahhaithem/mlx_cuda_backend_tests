@@ -114,3 +114,53 @@ BibTex entry:
   year = {2023},
 }
 ```
+
+
+---
+
+## MLX-CUDA Backend Testing Notes
+
+This document summarizes the steps taken to build and test the MLX library with the experimental CUDA backend.
+
+### Machine Specifications
+
+*   **Operating System:** Ubuntu 22.04
+*   **CPU:** Intel(R) Xeon(R) CPU E5-2698 v4 @ 2.20GHz
+*   **GPU:** Tesla V100-DGXS-16GB
+*   **CUDA Version:** 12.8
+
+### Build Process
+
+The following steps were taken to successfully build the MLX library with CUDA support:
+
+1.  **Initial Configuration:**
+    ```bash
+    cmake . -Bbuild -DMLX_BUILD_CUDA=ON -DMLX_BUILD_EXAMPLES=ON
+    ```
+    This failed due to a missing CUDA architecture definition.
+
+2.  **Specify CUDA Compiler:**
+    ```bash
+    cmake . -Bbuild -DMLX_BUILD_CUDA=ON -DMLX_BUILD_EXAMPLES=ON -DCMAKE_CUDA_ARCHITECTURES=native -DCMAKE_CUDA_COMPILER=/usr/local/cuda-12.8/bin/nvcc
+    ```
+    This failed due to a missing BLAS library.
+
+3.  **Build BLAS from Source (Successful Configuration):**
+    ```bash
+    cmake . -Bbuild -DMLX_BUILD_CUDA=ON -DMLX_BUILD_EXAMPLES=ON -DCMAKE_CUDA_ARCHITECTURES=native -DCMAKE_CUDA_COMPILER=/usr/local/cuda-12.8/bin/nvcc -DMLX_BUILD_BLAS_FROM_SOURCE=ON
+    ```
+
+4.  **Compilation:**
+    ```bash
+    cmake --build build -j 16
+    ```
+
+### Testing
+
+The following tests were performed to validate the build:
+
+1.  **Tutorial Example:**
+    *   The `examples/cpp/tutorial.cpp` file was modified to set the default device to the GPU.
+    *   The example was run, and it produced the expected output from the pull request, confirming that the CUDA backend was being used.
+    *   The changes to the tutorial file were reverted after the test.
+
