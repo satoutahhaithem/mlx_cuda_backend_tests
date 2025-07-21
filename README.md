@@ -164,3 +164,38 @@ The following tests were performed to validate the build:
     *   The example was run, and it produced the expected output from the pull request, confirming that the CUDA backend was being used.
     *   The changes to the tutorial file were reverted after the test.
 
+
+
+---
+
+### Simple C++ Example for CUDA
+
+A new, simplified C++ example (`simple_example.cpp`) has been added to demonstrate a basic MLX operation running on the CUDA backend.
+
+**How to Run the Simple Example:**
+
+1.  **Build the project:** Ensure you have built the project with the CUDA backend enabled using the instructions in the "MLX-CUDA Backend Testing Notes" section. If you have already built it, you can just build the new example:
+    ```bash
+    cmake --build build --target simple_example -j 16
+    ```
+
+2.  **Run the executable:**
+    ```bash
+    ./build/examples/cpp/simple_example
+    ```
+
+**Expected Output:**
+The program will print the two initial arrays and their sum, like this:
+```
+Array a:
+array([[1, 2],
+       [3, 4]], dtype=int32)
+
+Array b:
+array([[5, 6],
+       [7, 8]], dtype=int32)
+
+Result of a + b:
+array([[6, 8],
+       [10, 12]], dtype=int32)
+```

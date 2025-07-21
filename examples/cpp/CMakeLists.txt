@@ -10,3 +10,6 @@ build_example(linear_regression.cpp)
 build_example(logistic_regression.cpp)
 build_example(metal_capture.cpp)
 build_example(distributed.cpp)
+
+add_executable(simple_example simple_example.cpp)
+target_link_libraries(simple_example PRIVATE mlx)
