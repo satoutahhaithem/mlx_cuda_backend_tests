@@ -120,6 +120,8 @@ BibTex entry:
 
 ## MLX-CUDA Backend Testing Notes
 
+**Note:** The CUDA backend is currently experimental and not yet stable. Many features are still under active development, and you may encounter issues or unimplemented operations.
+
 This document summarizes the steps taken to build and test the MLX library with the experimental CUDA backend.
 
 ### Machine Specifications
